@@ -1,5 +1,6 @@
+import { Soil, type Context, type PetalTerraform } from '@gershy/lilac';
 import { assertEqual, testRunner } from '../build/utils.test.ts';
-import './main.ts';
+import { Domain } from './main.ts';
 
 // Type testing
 (async () => {
@@ -15,10 +16,30 @@ import './main.ts';
 
 testRunner([
   
-  { name: 'not implemented', fn: async () => {
+  { name: 'basic', fn: async () => {
+    
+    const domain = new Domain('my-cool-site.com', 443);
+    
+    const ctx: Context = {
+      pfx: 'aaa',
+      maturity: 'm0',
+      debug: true
+    } as any;
+    const soil: Soil.Base = null as any;
+    
+    const petals: PetalTerraform.Base[] = [];
+    for await (const petal of await domain.getPetals({ ...ctx, soil }))
+      petals.push(petal);
+    
+    const tf = (await Promise.all(petals.map(p => p.getResult()))).join('\n');
     
     // TODO: Implement!
-    assertEqual(null, null);
+    assertEqual(
+      tf,
+      String[cl.baseline](`
+        | data "aws_route53_zone" "domain_mycoolsite_com" { name = "my-cool-site.com" }
+      `)
+    );
     
   }}
   
