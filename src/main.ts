@@ -31,7 +31,10 @@ export class Domain extends Flower {
   }
   
   public async computePetals(ctx: Context & { soil: Soil.Base }) {
-    return [ this.getHostedZone() ];
+    const domain = this;
+    return (async function*() {
+      yield domain.getHostedZone();
+    })();
   }
   
 };
