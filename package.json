@@ -1,6 +1,6 @@
 {
   "name": "@gershy/lilac-domain",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Gershom Maes",
   "description": "TODO",
   "keywords": [
@@ -19,15 +19,15 @@
     "cmp"
   ],
   "dependencies": {
-    "@gershy/lilac": "^0.0.40",
-    "@gershy/logger": "^0.0.12",
-    "@gershy/util-phrasing": "^0.0.10"
+    "@gershy/lilac": "^0.0.41",
+    "@gershy/logger": "^0.0.13",
+    "@gershy/util-phrasing": "^0.0.11"
   },
   "devDependencies": {
     "@types/node": "^24.10.1"
   },
   "peerDependencies": {
-    "@gershy/clearing": "^0.0.44"
+    "@gershy/clearing": "^0.0.45"
   },
   "scripts": {
     "test": "npm run ts.check && npx tsx ./src/main.test.ts",
