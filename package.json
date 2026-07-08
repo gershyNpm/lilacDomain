@@ -1,6 +1,6 @@
 {
   "name": "@gershy/lilac-domain",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Gershom Maes",
   "description": "TODO",
   "keywords": [
@@ -19,7 +19,7 @@
     "cmp"
   ],
   "dependencies": {
-    "@gershy/lilac": "^0.0.42",
+    "@gershy/lilac": "^0.0.43",
     "@gershy/logger": "^0.0.14",
     "@gershy/util-phrasing": "^0.0.12"
   },
