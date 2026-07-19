@@ -1,6 +1,6 @@
-import { Soil, type Context, type PetalTerraform } from '@gershy/lilac';
 import { assertEqual, testRunner } from '../build/utils.test.ts';
 import { Domain } from './main.ts';
+import type { PetalTerraform } from '@gershy/lilac';
 
 // Type testing
 (async () => {
@@ -18,28 +18,32 @@ testRunner([
   
   { name: 'basic', fn: async () => {
     
-    const domain = new Domain('my-cool-site.com', 443);
     
-    const ctx: Context = {
-      pfx: 'aaa',
-      maturity: 'm0',
-      debug: true
-    } as any;
-    const soil: Soil.Base = null as any;
+    // const context: Context = {
+    //   pfx: 'aaa',
+    //   maturity: 'm0',
+    //   debug: true
+    // } as any;
+    // const soil: Soil.Base = null as any;
+    const domain = new Domain({
+      addr: 'my-cool-site.com',
+      port: 443
+    });
     
     const petals: PetalTerraform.Base[] = [];
-    for await (const petal of await domain.getPetals({ ...ctx, soil }))
+    for await (const petal of await domain.getPetals())
       petals.push(petal);
     
     const tf = (await Promise.all(petals.map(p => p.getResult()))).join('\n');
     
-    // TODO: Implement!
-    assertEqual(
-      tf,
-      String[cl.baseline](`
-        | data "aws_route53_zone" "domain_mycoolsite_com" { name = "my-cool-site.com" }
-      `)
-    );
+    assertEqual(tf, String[cl.baseline](`
+      | resource "aws_route53_zone" "domain_mycoolsite_com" { name = "my-cool-site.com" }
+      | output "domain_mycoolsite_com_output" {
+      |   value = aws_route53_zone.domain_mycoolsite_com.name_servers
+      |   description = "<no desc>"
+      |   sensitive = false
+      | }
+    `));
     
   }}
   
