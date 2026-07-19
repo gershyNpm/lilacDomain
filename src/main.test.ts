@@ -34,7 +34,11 @@ testRunner([
     for await (const petal of await domain.getPetals())
       petals.push(petal);
     
-    const tf = (await Promise.all(petals.map(p => p.getResult()))).join('\n');
+    const tf = await domain.getPetals()
+      [cl.toArr](v => v)
+      .then(petals => Promise.all(petals.map(p => p.getResult())))
+      .then(tfArr => tfArr.map(tf => cl.isCls(tf, Object) ? tf.tf : tf))
+      .then(tfArr => tfArr.join('\n'));
     
     assertEqual(tf, String[cl.baseline](`
       | resource "aws_route53_zone" "domain_mycoolsite_com" { name = "my-cool-site.com" }
