@@ -20,7 +20,6 @@ export class Domain extends Flower {
   }
   
   public getNetProc(): NetProc { return { proto: this.proto, addr: this.addr, port: this.port }; }
-  
   public getAddr      () { return this.addr; }
   public getAddrBase  () { return this.addr.split('.').slice(-2).join('.'); }
   public getAddrPcs   () { return this.addr.split('.'); }
