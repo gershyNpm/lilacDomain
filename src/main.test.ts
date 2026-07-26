@@ -36,11 +36,6 @@ testRunner([
     
     assertEqual(tf, String[cl.baseline](`
       | resource "aws_route53_zone" "domain_mycoolsite_com" { name = "my-cool-site.com" }
-      | output "domain_mycoolsite_com_output" {
-      |   value = aws_route53_zone.domain_mycoolsite_com.name_servers
-      |   description = "<no desc>"
-      |   sensitive = false
-      | }
     `));
     
   }}

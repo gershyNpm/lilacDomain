@@ -10,12 +10,12 @@ export class Domain extends Flower {
   protected addr: string;
   protected port: number;
   protected proto: 'http' | 'https';
-  constructor(args: { garden?: Garden<any, any>, proto?: 'http' | 'https', addr: string, port: number }) {
+  constructor(args: { garden?: Garden<any, any>, proto?: Domain['proto'], addr: string, port?: number }) {
     
     super(args);
     this.proto = args.proto ?? 'https';
     this.addr = args.addr;
-    this.port = args.port;
+    this.port = args.port ?? ({ http: 80, https: 443 } satisfies { [K in Domain['proto']]: number })[this.proto];
     
   }
   
@@ -37,22 +37,6 @@ export class Domain extends Flower {
       name: baseDomain
     });
     yield zone;
-    
-    yield new PetalTerraform.Output(`${baseDomainHandle}Output`, zone.ref('nameServers'), async nameservers => {
-      
-      if (!cl.isCls(nameservers, Array)) nameservers = [ nameservers ];
-      
-      return { [`domain/${this.getAddrBase()}`]: { manualRequirements: [
-        [
-          `To link your domain "${this.addr}" you must:`,
-          `1. navigate to your provider for that domain,`,
-          `2. enable custom nameservers,`,
-          `3. remove any preexisting nameservers, and`,
-          `4. add the following nameservers: ${nameservers.join(' and ')}`
-        ].join(' ')
-      ]}};
-      
-    });
     
   }
   
