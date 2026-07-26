@@ -1,5 +1,5 @@
 import '@gershy/clearing';
-import { Flower, PetalTerraform } from '@gershy/lilac';
+import { Flower, Garden, PetalTerraform } from '@gershy/lilac';
 import phrasing from '@gershy/util-phrasing';
 import type { NetProc } from '@gershy/util-http';
 
@@ -10,9 +10,9 @@ export class Domain extends Flower {
   protected addr: string;
   protected port: number;
   protected proto: 'http' | 'https';
-  constructor(args: { proto?: 'http' | 'https', addr: string, port: number }) {
+  constructor(args: { garden?: Garden<any, any>, proto?: 'http' | 'https', addr: string, port: number }) {
     
-    super();
+    super(args);
     this.proto = args.proto ?? 'https';
     this.addr = args.addr;
     this.port = args.port;

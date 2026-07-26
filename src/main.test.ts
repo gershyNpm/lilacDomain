@@ -18,14 +18,8 @@ testRunner([
   
   { name: 'basic', fn: async () => {
     
-    
-    // const context: Context = {
-    //   pfx: 'aaa',
-    //   maturity: 'm0',
-    //   debug: true
-    // } as any;
-    // const soil: Soil.Base = null as any;
     const domain = new Domain({
+      garden: {} as any,
       addr: 'my-cool-site.com',
       port: 443
     });
