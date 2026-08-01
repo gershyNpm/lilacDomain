@@ -1,6 +1,6 @@
 {
   "name": "@gershy/lilac-domain",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "Gershom Maes",
   "description": "TODO",
   "keywords": [
@@ -19,7 +19,7 @@
     "cmp"
   ],
   "dependencies": {
-    "@gershy/lilac": "^0.0.49",
+    "@gershy/lilac": "^0.0.50",
     "@gershy/logger": "^0.0.19",
     "@gershy/util-phrasing": "^0.0.17",
     "@aws-sdk/client-route-53": "^3.893.0"
