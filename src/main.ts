@@ -7,10 +7,10 @@ export class Domain extends Flower {
   
   static getAwsServices() { return [ 'route53' ] as const; }
   
-  protected addr: string;
+  protected addr: `${string}.${string}`;
   protected port: number;
   protected proto: 'http' | 'https';
-  constructor(args: { garden?: Garden<any, any>, proto?: Domain['proto'], addr: string, port?: number }) {
+  constructor(args: { garden?: Garden<any, any>, proto?: Domain['proto'], addr: `${string}.${string}`, port?: number }) {
     
     super(args);
     this.proto = args.proto ?? 'https';
@@ -18,6 +18,8 @@ export class Domain extends Flower {
     this.port = args.port ?? ({ http: 80, https: 443 } satisfies { [K in Domain['proto']]: number })[this.proto];
     
   }
+  
+  public getFlowerId() { return null; }
   
   public getNetProc(): NetProc { return { proto: this.proto, addr: this.addr, port: this.port }; }
   public getAddr      () { return this.addr; }
