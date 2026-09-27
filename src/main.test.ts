@@ -18,11 +18,7 @@ testRunner([
   
   { name: 'basic', fn: async () => {
     
-    const domain = new Domain({
-      garden: {} as any,
-      addr: 'my-cool-site.com',
-      port: 443
-    });
+    const domain = new Domain({ garden: {} as any, addr: 'my-cool-site.com', port: 443 });
     
     const petals: PetalTerraform.Base[] = [];
     for await (const petal of await domain.getPetals())
@@ -35,8 +31,18 @@ testRunner([
       .then(tfArr => tfArr.join('\n'));
     
     assertEqual(tf, String[cl.baseline](`
-      | resource "aws_route53_zone" "domain_mycoolsite_com" { name = "my-cool-site.com" }
+      | resource "aws_route53_zone" "domain_mycoolsite_com" {
+      |   name = "my-cool-site.com"
+      |   force_destroy = true
+      | }
+      | output "domain_mycoolsite_com" {
+      |   value = aws_route53_zone.domain_mycoolsite_com.name_servers
+      |   description = "<no desc>"
+      |   sensitive = false
+      | }
     `));
+    
+    
     
   }}
   
